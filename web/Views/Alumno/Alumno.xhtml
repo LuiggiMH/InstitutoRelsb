@@ -22,12 +22,12 @@
                     <p:dataTable id="tablaAlumnos" paginator="true" paginatorPosition="top" 
                                  var="alumno" value="#{alumnoBean.alumnos}">
                         <p:column headerText="Código"> 
-                            <h:outputText value="#{alumno.Id}"/>
+                            <h:outputText value="#{alumno.id}"/>
                         </p:column>
                         <p:column headerText="Nombre del alumno">
                             <h:outputText value="#{alumno.nombre} #{alumno.apellido}"/>
                         </p:column>
-                        <p:column headerText="Dirección">
+                        <p:column headerText="Fecha de Nacimiento">
                             <h:outputText value="#{alumno.fechaNacimiento}"/>
                         </p:column>
                         <p:column headerText="Modificar">
@@ -76,7 +76,7 @@
                             <p:outputLabel value="Apellido"/>
                             <p:inputText value="#{alumnoBean.alumno.apellido}"/>
 
-                            <p:outputLabel value="Dirección"/>
+                            <p:outputLabel value="Fecha de Nacimiento"/>
                             <p:calendar value="#{alumnoBean.alumno.fechaNacimiento}"/>
                         </p:panelGrid>
                         <p:commandButton value="Guardar" actionListener="#{alumnoBean.updateAlumno()}"
