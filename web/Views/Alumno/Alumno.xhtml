@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../Plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h2>Datos del Alumno</h2>
+                <h:form>
+                    <p:commandButton value="Nuevo Alumno" actionListener="#{alumnoBean.prepareAlumno()}"
+                                     oncomplete="PF('dialogNuevoAlumno').show()"
+                                     update="formNuevoAlumno"/>
+                </h:form>
+
+                <h:form id="formListaAlumnos">
+                    <p:dataTable id="tablaAlumnos" paginator="true" paginatorPosition="top" 
+                                 var="alumno" value="#{alumnoBean.alumnos}">
+                        <p:column headerText="Código"> 
+                            <h:outputText value="#{alumno.Id}"/>
+                        </p:column>
+                        <p:column headerText="Nombre del alumno">
+                            <h:outputText value="#{alumno.nombre} #{alumno.apellido}"/>
+                        </p:column>
+                        <p:column headerText="Dirección">
+                            <h:outputText value="#{alumno.fechaNacimiento}"/>
+                        </p:column>
+                        <p:column headerText="Modificar">
+                            <p:commandButton value="Modificar" oncomplete="PF('dialogModificarAlumno').show()"
+                                             update="formModificarAlumno">
+                                <f:setPropertyActionListener target="#{alumnoBean.alumno}" value="#{alumno}"/>                 
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" >
+                            <p:commandButton value="Eliminar" oncomplete="PF('dialogEliminarAlumno').show()"
+                                             update="formEliminarAlumno">
+                                <f:setPropertyActionListener target="#{alumnoBean.alumno}" value="#{alumno}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formNuevoAlumno">
+                    <p:dialog id="dlgNuevoAlumno" widgetVar="dialogNuevoAlumno" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{alumnoBean.alumno.nombre}"/>
+
+                            <p:outputLabel value="Apellido"/>
+                            <p:inputText value="#{alumnoBean.alumno.apellido}"/>
+
+                            <p:outputLabel value="Fecha de Nacimiento"/>
+                            <p:calendar value="#{alumnoBean.alumno.fechaNacimiento}"/>
+
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" actionListener="#{alumnoBean.insertAlumno()}"
+                                         update="formListaAlumnos:tablaAlumnos"
+                                         oncomplete="PF('dialogNuevoAlumno').hide()"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogNuevoAlumno').hide()"/>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formModificarAlumno">
+                    <p:dialog id="dlgModificarAlumno" widgetVar="dialogModificarAlumno" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{alumnoBean.alumno.nombre}"/>
+
+                            <p:outputLabel value="Apellido"/>
+                            <p:inputText value="#{alumnoBean.alumno.apellido}"/>
+
+                            <p:outputLabel value="Dirección"/>
+                            <p:calendar value="#{alumnoBean.alumno.fechaNacimiento}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" actionListener="#{alumnoBean.updateAlumno()}"
+                                         update="formListaAlumnos:tablaAlumnos"
+                                         oncomplete="PF('dialogModificarAlumno').hide()"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogModificarAlumno').hide()"/>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formEliminarAlumno">
+                    <p:dialog id="dlgEliminarAlumno" widgetVar="dialogEliminarAlumno" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <h:outputText value="Desea eliminar el alumno?  "/>
+                        <p:commandButton value="SI" actionListener="#{alumnoBean.deleteAlumno()}"
+                                         update="formListaAlumnos:tablaAlumnos"
+                                         oncomplete="PF('dialogEliminarAlumno').hide()"/>
+                        <p:commandButton value="NO" oncomplete="PF('dialogEliminarAlumno').hide()"/>
+                    </p:dialog>
+                </h:form>                
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

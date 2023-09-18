@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/09/2023 20:32:30 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sys.modelo.Matriculacion" table="matriculacion" catalog="instituto" optimistic-lock="version">
+        <composite-id name="id" class="sys.modelo.MatriculacionId">
+            <key-property name="idAlumno" type="int">
+                <column name="IdAlumno" />
+            </key-property>
+            <key-property name="idAsignatura" type="int">
+                <column name="IdAsignatura" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="alumno" class="sys.modelo.Alumno" update="false" insert="false" fetch="select">
+            <column name="IdAlumno" not-null="true" />
+        </many-to-one>
+        <many-to-one name="asignatura" class="sys.modelo.Asignatura" update="false" insert="false" fetch="select">
+            <column name="IdAsignatura" not-null="true" />
+        </many-to-one>
+        <property name="cantidadAsignaturas" type="int">
+            <column name="cantidadAsignaturas" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

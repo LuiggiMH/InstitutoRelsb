@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/09/2023 20:32:30 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sys.modelo.Asignatura" table="asignatura" catalog="instituto" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="profesor" class="sys.modelo.Profesor" fetch="select">
+            <column name="IdProfesor" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <set name="matriculacions" table="matriculacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdAsignatura" not-null="true" />
+            </key>
+            <one-to-many class="sys.modelo.Matriculacion" />
+        </set>
+    </class>
+</hibernate-mapping>
